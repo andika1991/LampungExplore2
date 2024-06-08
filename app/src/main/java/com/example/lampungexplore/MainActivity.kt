@@ -90,10 +90,28 @@ fun AppContent(navController: NavHostController, startDestination: String, curre
             enterTransition = null,
             exitTransition = null
         ) {
-            HomeScreen(currentUser)
+            HomeScreen(navController, currentUser)
+        }
+
+        composable(
+            route = "DaftarWisataLampungUtaraScreen",
+            enterTransition = null,
+            exitTransition = null
+        ) {
+            DaftarWisataLampungUtaraScreen(navController = navController)
+
+        }
+
+        composable("DeskripsiWisataScreen/{nama}/{deskripsi}", enterTransition = null,
+            exitTransition = null) { backStackEntry ->
+            val nama = backStackEntry.arguments?.getString("nama")
+            val deskripsi = backStackEntry.arguments?.getString("deskripsi")
+            DeskripsiWisataScreen(nama = nama ?: "", deskripsi = deskripsi ?: "")
         }
     }
 }
+
+
 
 @Composable
 fun SplashScreen() {

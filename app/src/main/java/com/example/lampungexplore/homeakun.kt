@@ -14,25 +14,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-
 @Composable
-fun HomeScreen(currentUser: FirebaseUser?) {
+fun HomeScreen(navController: NavController, currentUser: FirebaseUser?) {
     val currentUserEmail = currentUser?.email ?: ""
 
     Column(
@@ -63,8 +61,7 @@ fun HomeScreen(currentUser: FirebaseUser?) {
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
-
-        KabupatenList()
+        KabupatenList(navController)
     }
 }
 
@@ -104,42 +101,35 @@ fun BannerItem(image: Painter) {
 
 }
 
-
-
-
-
-
 @Composable
-fun KabupatenList() {
+fun KabupatenList(navController: NavController) {
     val kabupatenList = listOf(
         Kabupaten("Lampung Selatan", R.drawable.lampungutara),
         Kabupaten("Lampung Utara", R.drawable.lampungutara),
         Kabupaten("Lampung Tengah", R.drawable.lampungutara),
         Kabupaten("Lampung Barat", R.drawable.lampungutara),
         Kabupaten("Lampung Timur", R.drawable.lampungutara),
-        Kabupaten("Lampung Timur", R.drawable.lampungutara),
-        Kabupaten("Lampung Timur", R.drawable.lampungutara),
-        Kabupaten("Lampung Timur", R.drawable.lampungutara),
-        Kabupaten("Lampung Timur", R.drawable.lampungutara),
-        Kabupaten("Lampung Timur", R.drawable.lampungutara),
         // Tambahkan kabupaten lainnya sesuai kebutuhan
     )
 
     LazyColumn {
         items(kabupatenList) { kabupaten ->
-            KabupatenItem(kabupaten = kabupaten)
+            KabupatenItem(navController, kabupaten = kabupaten)
         }
     }
 }
 
 @Composable
-fun KabupatenItem(kabupaten: Kabupaten) {
+fun KabupatenItem(navController: NavController, kabupaten: Kabupaten) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp)
-            .clickable { /* Aksi ketika item diklik */ },
-
+            .clickable {
+                if (kabupaten.nama == "Lampung Utara") {
+                    navController.navigate("DaftarWisataLampungUtaraScreen")
+                }
+            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -161,7 +151,7 @@ data class Kabupaten(val nama: String, val icon: Int)
 @Preview
 @Composable
 fun PreviewHomeScreen() {
+    val navController = rememberNavController()
     val currentUser = FirebaseAuth.getInstance().currentUser
-    HomeScreen(currentUser)
+    HomeScreen(navController, currentUser)
 }
-
