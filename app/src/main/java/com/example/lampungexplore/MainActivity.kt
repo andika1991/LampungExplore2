@@ -58,6 +58,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun AppContent(navController: NavHostController, startDestination: String, currentUser: FirebaseUser?) {
     var showSplash by remember { mutableStateOf(true) }

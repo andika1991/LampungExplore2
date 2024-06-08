@@ -30,6 +30,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
+
 @Composable
 fun HomeScreen(currentUser: FirebaseUser?) {
     val currentUserEmail = currentUser?.email ?: ""
