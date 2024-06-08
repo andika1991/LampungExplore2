@@ -1,86 +1,108 @@
 package com.example.lampungexplore
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.ui.tooling.preview.Preview
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun RegisterScreen(navController: NavController?, onLoginClick: () -> Unit?) {
-    var username by remember { mutableStateOf("") }
+fun RegisterScreen(navController: NavController, onRegisterSuccess: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
+    var successMessage by remember { mutableStateOf("") }
 
-    Surface(
+    val auth = FirebaseAuth.getInstance()
+
+    Column(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        TextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Name") },
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        TextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                if (password == confirmPassword) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                successMessage = "Pendaftaran sukses, silakan login."
+                                onRegisterSuccess()
+                            } else {
+                                errorMessage = "Pendaftaran gagal: ${task.exception?.message}"
+                            }
+                        }
+                } else {
+                    errorMessage = "Passwords do not match"
+                }
+            },
+            modifier = Modifier.padding(horizontal = 16.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.lampungexplore),
-                contentDescription = "Lampung Explore Icon",
-                modifier = Modifier.size(100.dp)
-            )
+            Text("Register")
+        }
 
+        if (errorMessage.isNotEmpty()) {
             Spacer(modifier = Modifier.height(16.dp))
+            Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
+        }
 
-            Text(
-                text = "Daftar Akun",
-                fontSize = 24.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
+        if (successMessage.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(text = successMessage, color = MaterialTheme.colorScheme.primary)
+        }
 
-            TextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Username") },
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+        Spacer(modifier = Modifier.height(16.dp))
 
-            TextField(
-                value = email,
-                onValueChange = { email = it },
-                label = { Text("Email") },
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Password") },
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-
-            Button(
-                onClick = { /* Handle register button click */ }
-            ) {
-                Text("Register")
-            }
-
-            ClickableText(
-                text = AnnotatedString("Already have an account? Login here"),
-                onClick = { onLoginClick?.invoke() },
-                modifier = Modifier.padding(top = 16.dp)
-            )
+        Button(
+            onClick = {
+                navController.navigate("LoginScreen")
+            },
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Text("Go to Login")
         }
     }
 }
@@ -88,7 +110,9 @@ fun RegisterScreen(navController: NavController?, onLoginClick: () -> Unit?) {
 @Preview(showBackground = true)
 @Composable
 fun RegisterPreview() {
-    val navController = rememberNavController() // Inisialisasi NavController
+    val navController = rememberNavController()
 
-    RegisterScreen(navController = navController, onLoginClick = {})
+    RegisterScreen(navController = navController, onRegisterSuccess = {
+        navController.navigate("loginScreen")
+    })
 }

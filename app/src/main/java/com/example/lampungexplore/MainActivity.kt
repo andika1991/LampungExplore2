@@ -26,22 +26,40 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import android.app.Application
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+
+class MyApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        FirebaseApp.initializeApp(this)
+    }
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        FirebaseApp.initializeApp(this)
+        val currentUser = FirebaseAuth.getInstance().currentUser
         setContent {
             LampungExploreTheme {
                 val navController = rememberNavController()
-                AppContent(navController = navController)
+
+
+                // Set graf navigasi ke NavHostController
+                val startDestination = if (currentUser != null) "HomeScreen" else "loginScreen"
+
+                AppContent(navController = navController, startDestination = startDestination ,currentUser =currentUser)
             }
         }
     }
 }
 
 @Composable
-fun AppContent(navController: NavHostController) {
+fun AppContent(navController: NavHostController, startDestination: String, currentUser: FirebaseUser?) {
     var showSplash by remember { mutableStateOf(true) }
     var showLogin by remember { mutableStateOf(false) }
 
@@ -51,7 +69,7 @@ fun AppContent(navController: NavHostController) {
         showLogin = true
     }
 
-    NavHost(navController, startDestination = "loginScreen") {
+    NavHost(navController, startDestination = startDestination) {
         composable("loginScreen") {
             if (showSplash) {
                 SplashScreen()
@@ -63,13 +81,18 @@ fun AppContent(navController: NavHostController) {
         }
         composable("daftar") {
             RegisterScreen(navController = navController) {
-             
+
             }
         }
-
+        composable(
+            route = "HomeScreen",
+            enterTransition = null,
+            exitTransition = null
+        ) {
+            HomeScreen(currentUser)
+        }
     }
 }
-
 
 @Composable
 fun SplashScreen() {
@@ -88,8 +111,11 @@ fun SplashScreen() {
 
 @Composable
 fun LoginScreen(navController: NavController, onRegisterClick: () -> Unit) {
-    var username by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
+
+    val auth = FirebaseAuth.getInstance()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -115,11 +141,11 @@ fun LoginScreen(navController: NavController, onRegisterClick: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Username field
+            // Email field
             TextField(
-                value = username,
-                onValueChange = { username = it },
-                label = { Text("Username") },
+                value = email,
+                onValueChange = { email = it },
+                label = { Text("Email") },
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
@@ -128,17 +154,39 @@ fun LoginScreen(navController: NavController, onRegisterClick: () -> Unit) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Login button
             Button(
-                onClick = { /* Handle login button click */ },
+                onClick = {
+                    if (email.isNotEmpty() && password.isNotEmpty()) {
+                        auth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Jika login berhasil, arahkan ke halaman home APK
+                                    navController.navigate("HomeScreen")
+                                } else {
+                                    errorMessage = "Email atau password salah"
+                                }
+                            }
+                    } else {
+                        errorMessage = "Email dan password harus diisi"
+                    }
+                },
                 modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 Text("Login")
+            }
+
+            // Menampilkan pesan kesalahan
+            if (errorMessage.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
             }
 
             // Footer
@@ -154,16 +202,5 @@ fun LoginScreen(navController: NavController, onRegisterClick: () -> Unit) {
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LampungExploreTheme {
-        val navController = rememberNavController() // Inisialisasi NavController
-
-        // Panggil AppContent dan berikan navController ke dalamnya
-        AppContent(navController)
     }
 }
