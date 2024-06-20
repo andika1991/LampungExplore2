@@ -253,7 +253,7 @@ fun DaftarWisataWayKananScreen(navController: NavController) {
 
             LazyColumn {
                 items(wisataList) { wisata ->
-                    WisataItemlamteng(wisata = wisata, navController = navController)
+                    WisataItemway(wisata = wisata, navController = navController)
                 }
             }
         }
@@ -395,5 +395,5 @@ data class Wisataway(
 @Composable
 fun waylistApp() {
     val navController = rememberNavController()
-    LampungExploreApp(navController = navController)
+    waylistApp(navController = navController)
 }

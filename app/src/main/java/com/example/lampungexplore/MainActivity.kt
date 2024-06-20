@@ -30,6 +30,8 @@ import android.app.Application
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -51,12 +53,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
 
-        // Inisialisasi MediaPlayer dan mulai memutar audio
+
         mediaPlayer = MediaPlayer.create(this, R.raw.lampungkita) // Ganti your_audio_file dengan nama file audio Anda
         mediaPlayer.isLooping = true
         mediaPlayer.start()
 
         setContent {
+            val currentUser = FirebaseAuth.getInstance().currentUser
             LampungExploreTheme {
                 val navController = rememberNavController()
                 AppContent(navController = navController)
@@ -87,7 +90,7 @@ fun AppContent(navController: NavHostController) {
 
 
         }
-        composable("daftar") {
+        composable("RegisterScreen") {
             RegisterScreen(navController = navController) {
             }
 
@@ -893,6 +896,18 @@ fun AppContent(navController: NavHostController) {
                 }
             )
         }
+        composable("home") {
+            val currentUser = null
+            HomeScreen(navController, currentUser)
+        }
+        composable("event_list") { EventList(navController) }
+        composable(
+            route = "event_detail/{eventTitle}",
+            arguments = listOf(navArgument("eventTitle") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val eventTitle = backStackEntry.arguments?.getString("eventTitle")
+            EventDetailScreen(navController = navController, eventTitle = eventTitle)
+        }
         composable(
             route = "MapsScreenway/{googleMapsUrl}",
             arguments = listOf(
@@ -902,10 +917,9 @@ fun AppContent(navController: NavHostController) {
             exitTransition = null
         ) { backStackEntry ->
             val googleMapsUrl = backStackEntry.arguments?.getString("googleMapsUrl") ?: ""
-
-            // Display the map screen using the provided URL
             MapsScreenway(googleMapsUrl = googleMapsUrl)
         }
+
     }
 }
 
@@ -971,7 +985,7 @@ fun LoginScreen(navController: NavController, onRegisterClick: () -> Unit) {
             Image(
                 painter = painterResource(id = R.drawable.lampungexplorere),
                 contentDescription = "Lampung Explore Icon",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(200.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -1033,10 +1047,19 @@ fun LoginScreen(navController: NavController, onRegisterClick: () -> Unit) {
             ) {
                 Text(text = "Belum punya akun? ")
                 ClickableText(
-                    text = AnnotatedString(" Klik daftar sekarang"),
-                    onClick = { onRegisterClick() }
+                    text = buildAnnotatedString {
+                        append("Klik daftar sekarang")
+                        addStyle(style = SpanStyle(color = Color.Blue), start = 0, end = 20)
+                    },
+
+                    onClick = {
+                        navController.navigate("RegisterScreen")
+                    },
+                    modifier = Modifier.padding(4.dp).background(Color.Transparent)
+                        .padding(4.dp).wrapContentSize()
                 )
             }
         }
     }
 }
+

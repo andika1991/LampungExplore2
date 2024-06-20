@@ -105,65 +105,36 @@ fun pswlistApp(navController: NavHostController) {
 fun DaftarWisataPringsewuScreen(navController: NavController) {
     val wisataList = listOf(
         Wisata(
-            "Bendungan Way Rarem",
-            "Sejarah Bendungan Way Rarem\n" +
-                    "Bendungan Way Rarem dibangun oleh pemerintah Lampung Utara. Memiliki jangkauan untuk mengaliri seluas 22.000 Hektar. Dengan luas bendungan sendiri 49,2 hektar serta ketinggian 59 meter merupakan bendungan terbesar di Lampung Utara.\n" +
-                    "\n" +
-                    "Dengan adanya bendungan ini membantu untuk irigasi pada sektor perganian di sekitar Abung Timur, Tulang Bawang Tengah, Tulang Bawang Udik, dan juga Kotabumi.\n" +
-                    "\n" +
-                    "Ciri khas dari lokasi tempat bendungan ini berada adalah terletak di perkampungan dan suasana alamnya masih sangat segar.\n" +
-                    "\n" +
-                    "Di Tanggal 14 Juli 1984, Bendungan Way Rarem diresmikan oleh Presiden kedua Indonesia, yaitu Presiden Soeharto.Lokasi Bendungan Way Rarem\n" +
-                    "Bendungan ini terletak di Desa Kurun, Kecamatan Abung Pekurun, Kabupaten Lampung Utara, Lampung. Untuk anda yang ingin bertandang kesana maka dapat melakukan perjalanan dari Pusat Kota Bandar Lampung dan langsung menuju ke arah Kotabumi. Untuk dapat sampai bendungan ini dapat menggunakan kendaraan umum atau pribadi. Seperti Damri, Puspa Jaya dan kendaraan umum lainnya.\n" +
-                    "\n" +
-                    "Cukup banyak bus yang dari Bandar Lampung menuju Kotabumi dan sekitarnya. Jadi tidak perlu bingung untuk transportasi menuju bendungan ini.\n" +
-                    "\n" +
-                    "Tiket Masuk Bendungan Way Rarem\n" +
-                    "Untuk masuk tempat wisata air di Lampung Utara ini anda tidak dikenakan biaya masuk. Hal ini mengingat dulu bendungan ini sempat dikelola dengan baik oleh pemerintah, namun semenjak banyak kejadian mistis dan menelan korban bendungan ini menjadi sepi pengunjung.\n" +
-                    "\n" +
-                    "Fasilitas Bendungan Way Rarem\n" +
-                    "Dulu tempat ini sering dijadikan tempat pertunjukan dan sering didatangi oleh artis ibukota seperti Evie Tamala atau artis lainnya.\n" +
-                    "\n" +
-                    "Namun saat ini banyak fasilitas yang rusak antara lain seperti permainan anak-anak dan pondok wisata yang dapat dipakai untuk berteduh yang sudah terbengkalai dan dibiarkan begitu saja. Hal ini juga terlihat ketika memasuki bendungan di pos jaga yang sudah rusak.\n" +
-                    "\n" +
-                    "Dengan tidak dikelola kembali bendungan ini, maka saat ini ketika musim kemarau airnya berkurang. Namun ketika musim hujan pemandangan air yang dibendungan dapat mempesona siapapun yang datang melihatnya.\n" +
-                    "\n" +
-                    "Suara air yang gemercik saling bersautan merupakan satu dari suara yang sering terdengar di sini. Suara tersebut akan menjadikan anda merasa tenang dan seolah berada di alam bebas.\n" +
-                    "\n",
-            listOf(R.drawable.wayrarem, R.drawable.tamanwisatawayrarem), // Example images
+            "Air Terjun Pagasan Pringsewu",
+            "Air Terjun Pagasan – Tidak banyak yang tahu kalau Kabupaten Pringsewu juga menyimpan banyak potensi wisata alam. Termasuk air terun yang ternyata ada beberapa dan tersebar di daerah dengan julukan Bumi Jejama Secancanan.\n" +
+                    "Air Terjun Pagasan adalah air terjun dengan dinding dan aliran air terjun yang indah. Air terjunnya tidak jatuh tegak lurus, melainkan jatuh berundak-undak di tebing bebatuannya.\n" +
+                    "Tentu kita bertanya-tanya ya di mana lokasi air terjun yang belum banyak diketahui banyak orang ini.\n" +
+                    "Air terjun ini berada di daerah Utara kabupaten Pringsewu. Melihat lokasinya di peta, ternyata dekat dengan Bendungan Batu Tegi.\n" +
+                    "Berjarak sekitar 90 kilometer dari Kota Bandar Lampung. Waktu tempuhnya sekitar 3 jam bekendara.\n" +
+                    "Sedangkan dari Pringsewu berjarak sekitar 50 kilometer. Waktu tempuhnya sekitar 2 jam dengan berkendara.\n  Kalau kamu dari arah Pringsewu, arahkan kendaraan ke Pasar Pagelaran. Lalu belok ke kanan menuju Fajar Baru dan Desa Neglasari.\n" +
+                    "Kalau dari arah Sukoharjo, arahkan kendaraan menuju Banyumas Lurus dan Pagelaran Utara. Kemudian menuju ke Neglasari dan sekitar Pagasan.\n" +
+                    "Dari Bandar Lampung, selain lewat Pringsewu, juga bisa lewat Tegineneng. Setelah\n" +
+                    "Bandara Radin Inten II, belok ke kiri ke arah Negerikaton – Bangun Sari – Adi Luwih – Sribasuki – Pasar Kalirejo. Lalu arahkan kendaraan menuju Neglasari dan Pagasan.\n",
+            listOf(R.drawable.bukitpangonan, R.drawable.bukitpangonan), // Example images
             "Gratis Tidak Dikenakan Biaya sama sekali",
-            "https://maps.google.com/?q=Bendungan+Way+Rarem"
+            "https://maps.app.goo.gl/mZX13NFWz8PP78WX6"
         ),
         Wisata(
-            "Curup Ateng",
-            "Disebut dengan nama Curup Ateng karena tinggi air terjun ini sangat mini. Meski demikian, keindahan dari air terjun ini tetap dapat dinikmati. Bermodal lingkungan yang asri dan udara yang sejuk membuat atmosfer tersendiri bagi para pengunjung. Meski ukuran curup ini lebih mini namun jangan heran dengan pemandangan indah yang ada di sekitarnya. Penuh dengan tumbuhan hijau, bunga yang indah dan beberapa rumput liar yang menambah semarak suasana.\n" +
-                    "\n" +
-                    "Cobalah datang bersama keluarga atau orang tersayang sambil berendam di kolam bawah air terjun, pasti akan sangat sejuk dan asik. Jangan lupa mengambil foto sebagai kenangan terindah bersama orang terkasih. Alamat: Tanjung Baru, Kec. Bukit Kemuning, Kab. Lampung Utara, Lampung",
-            listOf(R.drawable.curupateng, R.drawable.curupateng), // Example images
+            "Gua maria laverna",
+            "Kabupaten Pringsewu sepertinya menjadi kabupaten istimewa bagi umat Katholik di Provinsi Lampung.Sebab di kabupaten inilah umat katholik dapat menikmati wisata rohani Gua Maria Padang Bulan, Desa Fajar Esuk, Kabupaten Pringsewu, Lampung.\n" +
+                    "lokasi yang memiliki julukan Maria Perempuan Untuk Semua Manusia ini sering dikunjungi peziarah dari berbagai daerah.Disebut-sebut, gua ini tidak kalah indah dengan wisata ziarah Lourdes yang berada di Perancis (destinasi wisata ziarah umat katolik paling terkenal di dunia).Tempat ziarah Gua Maria Lourdes diyakini umat katolik merupakan petilasan penampakan bunda Maria.\n" +
+                    "Padang Bulan dalam bahasa Jawa yang berarti terang bulan adalah nama sebuah desa berbukit di wilayah Kelurahan Fajar Esuk, Pringsewu.Dalam struktur Gereja, Padang Bulan termasuk di dalam wilayah Paroki Santo Yusuf, Pringsewu.Wisata religi yang memiliki jarak sekitar tiga kilometer dari Pringsewu ini istimewanya masih alami.Pepohonan besar dipertahankan di sekitar areal Goa Maria, sehingga kawasan menjadi jauh dari polusi udara dan kebisingan jalan raya.\n" +
+                    "Selain itu, di sekitarnya masih banyak sawah-sawah yang produktif, sehingga menambah keasrian pemandangan nan hijau.\n",
+            listOf(R.drawable.guamaria, R.drawable.guamaria), // Example images
             "Tidak dikenakan Biaya Tiket Masuk",
-            "https://goo.gl/maps/H32HBcBv1SZysMy56"
+            "https://maps.app.goo.gl/H7ne81pZL7b4t7L96"
         ),
         Wisata(
-            " Agrowisata Lembah Bambu Kuning",
-            "Argowisata Lembah Bambu Kuning adalah destinasi wisata buatan yang menggabungkan beberapa wahana dan aktivitas seru untuk para wisatawan. Seperti waterboom, taman bunga, kuliner, outbound, dan wisata pemancingan. Destinasi wisata ini berlokasi di Desa Abung Jayo, Kecamatan Abung Selatan, Kabupaten Lampung Utara, Lampung.\n" +
-                    "Tidak hanya itu, Agrowisata Lembah Bambu Kuning ini dibangun di tengah perkebunan karet. Hal ini membuat suasana yang tercipta masih asri, rindang, sejuk, dan segar. Daya tarik utama dari tempat ini adalah argo wisatanya. Kegiatan wisata yang menggunakan lahan pertanian atau fasilitas yang terdapat di dalamnya. Umumnya jenis wisata seperti ini menggunakan hewan dan tumbuhan untuk menarik atensi para wisatawan.\n" +
-                    "Sama seperti namanya, di Agrowisata Lembah Bambu Kuning ada banyak wisata tanaman dan hewan. Seperti memetik buah dan juga memberi makan hewan. Ada beberapa paket wisata yang bisa dipilih oleh para wisatawan. Ada Paket Edukasi untuk keliling area taman dan mempelajari alam yang akan dibimbing oleh pemandu profesional.\n" +
-                    "\n" +
-                    "Lalu ada Paket Pelajar bagi yang tertarik untuk menikmati wahana waterboom. Terakhir ada Paket PAUD/TK yang ditujukan untuk rombongan PAUD yang ingin belajar tentang alam.Nantinya, para wisatawan akan diajak untuk melakukan pembibitan tanaman, pembibitan buah, pertanian, pembibitan ikan, wisata buah, wisata tanaman hias, dan masih banyak kegiatan seru lainnya.\n" +
-                    "Agrowisata Lembah Bambu Kuning juga menyediakan berbagai wahana permainan seru lainnya. Seperti becak mini, motor mini, flying fox, jungle tracking, dan outbound di alam terbuka. Tidak hanya itu, ada banyak spot foto yang tidak boleh dilewati begitu saja. Spot foto yang paling populer adalah Jembatan Lembah Bambu Kuning atau LBK.\n" +
-                    "Selain menjadi destinasi wisata, di Agrowisata Lembah Bambu Kuning juga sering diadakan acara-acara tertentu. Mulai dari pentas seni hingga kegiatan sosial. Tempatnya yang memiliki luas sekitar 4 hektar ini bisa menampung hingga ratusan orang sekaligus.\n" +
-                    "\n" +
-                    "HTM, Fasilitas, dan Waktu Operasional\n" +
-                    "Destinasi Agrowisata Lembah Bambu Kuning yang didirikan pada tahun 2014 ini terkenal akan tanaman jambu, rambutan, dan jeruknya. Harga tiket masuk yang dikenakan adalah Rp10.000 per orang berlaku untuk orang dewasa dan anak-anak.\n" +
-                    "Lalu untuk wihana waterboom dikenakan harga tiket sebesar Rp20.000 per orang. Paket wisata edukasi mulai dari Rp35.000 per orang. Jika para wisatawan ingin menikmati wisata taman bunga, harga tiket yang harus dibayar adalah Rp5.000 per orang.\n" +
-                    "Sementara itu, untuk aktivitas seru lainnya seperti flying fox, mini becak, mini motor, dan outbound bisa dinikmati dengan harga mulai Rp20.000 per orang. Waktu operasional Agrowisata Lembah Bambu Kuning dimulai dari pukul 08.00 hingga 17.00. Tempat wisata ini buka setiap hari dan terbuka untuk umum.\n" +
-                    "Sebagai bentuk profesionalisme, pihak pengelola Agrowisata Lembah Bambu Kuning menyediakan fasilitas umum yang lengkap. Mulai dari toilet, mushola, area parkir yang luas, kantin dan cafe, tempat makan, wahana memancing, wisata kuliner, spot foto, toko pusat oleh-oleh dan souvenir, hingga akses wifi gratis.\n" +
-                    "\n" +
-                    "Salah satu fakta menarik dari Agrowisata Lembah Bambu Kuning ini adalah belum diekspos secara besar-besaran. Dalam artian, pihak pengelola belum melakukan promosi di media-media besar terkait potensi wisata ini.Selama ini, promosi dilakukan hanya melalui media sosial dan dari mulut ke mulut para wisatawan yang datang. Sehingga bisa menjadi populer seperti sekarang.Berkunjung ke Agrowisata Lembah Bambu Kuning tidak hanya mengajarkan anak-anak tentang alam dan hasilnya, tetapi para wisatawan juga bisa menikmati pesona keindahan alam yang masih hijau dan asri.\n" +
-                    "Jika Anda berkunjung ke tempat ini, ada baiknya datang ketika weekday dan dari pagi. Sebab Agrowisata Lembah Bambu Kuning akan ramai dikunjungi para wisatawan di akhir pekan.",
-            listOf(R.drawable.lbk1, R.drawable.lbk2,R.drawable.lbk3,R.drawable.lbk4), // Example images
+            "Tegal Gupid",
+            "n dari pagi. Sebab Agrowisata Lembah Bambu Kuning akan ramai dikunjungi para wisatawan di akhir pekan.",
+            listOf(R.drawable.tegalgupit, R.drawable.tegalgupit,R.drawable.tegalgupit,R.drawable.tegalgupit), // Example images
             "Harga perwahana berbeda beda 5.000 - 20.000",
-            "https://www.google.com/maps/dir//Agrowisata+Lembah+Bambu+Kuning+5W5M%2BP7R+Abung+Jayo+Kec.+Abung+Sel.,+Kabupaten+Lampung+Utara,+Lampung+34517/@-4.840638,104.9331349,15z/data=!4m5!4m4!1m0!1m2!1m1!1s0x2e38a97ca0600b4b:0xa5f75d9e92777da8"
+            "https://maps.app.goo.gl/zvQcBsKuvnPjhuy29"
         ) ,
         Wisata(
             "Air Terjun Sukaemi",
@@ -245,7 +216,7 @@ fun DaftarWisataPringsewuScreen(navController: NavController) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Daftar Wisata di Lampung Utara",
+                text = "Daftar Wisata di Pringsewu",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(bottom = 16.dp),
                 color = Color.Black

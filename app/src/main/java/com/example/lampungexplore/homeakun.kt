@@ -9,12 +9,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -23,13 +26,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.viewpager2.widget.ViewPager2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun HomeScreen(navController: NavController, currentUser: FirebaseUser?) {
+fun AppNavigation(navController: NavHostController, currentUser: FirebaseUser?) {
+    NavHost(navController, startDestination = "home") {
+        composable("home") { HomeScreen(navController, currentUser) }
+        composable(
+            route = "event_detail/{eventTitle}",
+            arguments = listOf(navArgument("eventTitle") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val eventTitle = backStackEntry.arguments?.getString("eventTitle")
+            EventDetailScreen(navController = navController, eventTitle = eventTitle)
+        }
+    }
+}
+
+
+
+@Composable
+fun HomeScreen(navController: NavController, currentUser: FirebaseUser?)
+{
     val currentUserEmail = currentUser?.email ?: ""
 
     LazyColumn(
@@ -50,9 +75,9 @@ fun HomeScreen(navController: NavController, currentUser: FirebaseUser?) {
             // Tambahkan banner gambar dengan slider animasi
             BannerSlider(
                 images = listOf(
-                    R.drawable.gbban,
-                    R.drawable.gbban,
-                    R.drawable.gbban
+                    R.drawable.bannera,
+                    R.drawable.bannerb,
+                    R.drawable.bannerc
                 )
             )
 
@@ -75,7 +100,7 @@ fun HomeScreen(navController: NavController, currentUser: FirebaseUser?) {
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(vertical = 16.dp)
             )
-            EventList()
+            EventList(navController)
         }
 
         item {
@@ -90,14 +115,18 @@ fun HomeScreen(navController: NavController, currentUser: FirebaseUser?) {
             KabupatenList(navController)
         }
     }
+
+
 }
 
+
+
 @Composable
-fun EventList() {
+fun EventList(navController: NavController) {
     val eventList = listOf(
-        Event("Festival Krakatau", "Deskripsi acara Festival Krakatau", R.drawable.gbban),
-        Event("Lampung Fair", "Deskripsi acara Lampung Fair", R.drawable.gbban),
-        Event("Pesta Sekura", "Deskripsi acara Pesta Sekura", R.drawable.gbban)
+        Event("Festival Krakatau", "Festival Krakatau 15-20 Juni 2024", R.drawable.event3),
+        Event("Lampung Fair", "Lampung Fair 11-28 Agustus 2024", R.drawable.event2),
+        Event("Pesta Sekura", "Pesta Sekura 22-30 September 2024", R.drawable.event1)
         // Tambahkan event lainnya sesuai kebutuhan
     )
 
@@ -105,18 +134,102 @@ fun EventList() {
         modifier = Modifier.fillMaxWidth()
     ) {
         items(eventList) { event ->
-            EventItem(event = event)
+            EventItem(event = event, navController = navController)
         }
     }
 }
 
+data class EventDetail(
+    val title: String,
+    val image: Int,
+    val description: String,
+    val address: String
+)
+
 @Composable
-fun EventItem(event: Event) {
+fun EventDetailScreen(eventTitle: String?, navController: NavHostController) {
+    // Mock event detail data; ideally, this would come from a repository or passed as a parameter
+    val eventDetail = EventDetail(
+        title = eventTitle ?: "Unknown Event",
+        image = R.drawable.event1, // Replace with actual image resource
+        description = "Festival ini diselenggarakan di PKOR WAY HALIM untuk memeriahkan Pariwisata Provinsi Lampung",
+        address = "123 Event Street, Event City, Event Country"
+    )
+
+    // Display event details
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        // Event Title
+        Text(
+            text = eventDetail.title,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Event Image
+        Image(
+            painter = painterResource(id = eventDetail.image),
+            contentDescription = eventDetail.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(250.dp)
+                .clip(MaterialTheme.shapes.medium),
+            contentScale = ContentScale.Crop
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Event Description
+        Text(
+            text = "Description",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Text(
+            text = eventDetail.description,
+            fontSize = 16.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+        // Event Address
+        Text(
+            text = "Address",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        Text(
+            text = eventDetail.address,
+            fontSize = 16.sp,
+            color = Color.Black
+        )
+    }
+}
+
+
+
+
+
+@Composable
+fun EventItem(event: Event, navController: NavController) {
     Column(
         modifier = Modifier
             .width(300.dp)
             .padding(vertical = 8.dp, horizontal = 8.dp)
             .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.medium)
+            .clickable {
+                navController.navigate("event_detail/${event.title}")
+            }
             .padding(16.dp)
     ) {
         Image(
