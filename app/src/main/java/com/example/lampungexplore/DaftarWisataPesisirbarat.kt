@@ -245,7 +245,7 @@ fun DaftarWisataPesisirBaratScreen(navController: NavController) {
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Daftar Wisata di Lampung Utara",
+                text = "Daftar Wisata di Pesisir Barat",
                 fontSize = 24.sp,
                 modifier = Modifier.padding(bottom = 16.dp),
                 color = Color.Black
